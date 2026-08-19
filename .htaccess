@@ -52,6 +52,16 @@ ErrorDocument 404 /404.html
   ExpiresByType image/webp               "access plus 1 year"
 </IfModule>
 
+# config.js carries the backend endpoint and must never be cached long-term,
+# otherwise a returning visitor keeps pointing at an old project after a change.
+<IfModule mod_headers.c>
+  <FilesMatch "config\.js$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
+</IfModule>
+
 <FilesMatch "\.(md|mjs|json|yml|log)$">
   <IfModule mod_authz_core.c>
     Require all denied
