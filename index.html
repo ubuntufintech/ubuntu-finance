@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ubuntu Finance — Your Financial Freedom Is Our Purpose</title>
+<meta name="description" content="Ubuntu Finance is a borderless digital bank powered by AI, machine learning and blockchain. Instant transfers, salary advances at a flat 5%, free financial literacy and real-time scam protection.">
+<meta name="theme-color" content="#0C2118">
+<link rel="canonical" href="https://ubuntufin.com/">
+<meta property="og:title" content="Ubuntu Finance — Your Financial Freedom Is Our Purpose">
+<meta property="og:description" content="A borderless digital financial ecosystem. Send, borrow, learn and grow — from your phone, anywhere in the world.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ubuntufin.com/">
+<meta property="og:image" content="https://ubuntufin.com/assets/img/ubuntu-mark.svg">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap center">
+    <span class="pill pill-dark" style="margin-bottom:22px">
+      <span class="dot"></span> One World Digital Bank
+    </span>
+    <h1 class="h1" style="max-width:900px;margin:0 auto">
+      Your Financial Freedom<br>Is Our Purpose
+    </h1>
+    <p class="lead lead-dark" style="max-width:620px;margin:22px auto 0">
+      Send money, access a fair salary advance, learn what nobody taught you about money,
+      and protect yourself from scams. All from one place, wherever you are in the world.
+    </p>
+
+    <!-- ask bar -->
+    <div style="max-width:720px;margin:38px auto 0">
+      <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap">
+        <button class="tabbtn on" data-tab="chat">Ask anything</button>
+        <button class="tabbtn" data-tab="calc">Repayment calculator</button>
+        <button class="tabbtn" data-tab="fx">Currency converter</button>
+      </div>
+      <div id="tab-chat" class="tabpane"></div>
+      <div id="tab-calc" class="tabpane" hidden></div>
+      <div id="tab-fx" class="tabpane" hidden></div>
+    </div>
+
+    <div class="btn-row" style="justify-content:center;margin-top:32px">
+      <a class="btn btn-primary" href="/signup.html">Open your account</a>
+      <a class="btn btn-ghost-dark" href="/about.html">Why Ubuntu exists</a>
+    </div>
+
+    <!-- live rates -->
+    <div style="margin-top:52px;text-align:left">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <span class="tag-live"><span class="dot"></span> Live currency rates</span>
+        <span class="small" style="color:rgba(232,237,231,.5)" id="rateClock"></span>
+      </div>
+      <div class="rate-strip" id="rateStrip"></div>
+    </div>
+
+    <div class="stats" style="margin-top:40px;text-align:left">
+      <div><div class="k">Free</div><div class="v">Financial literacy, forever</div></div>
+      <div><div class="k">5%</div><div class="v">Flat salary advance fee</div></div>
+      <div><div class="k">Zero</div><div class="v">Hidden fees, ever</div></div>
+      <div><div class="k">AI</div><div class="v">Real-time scam protection</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TILES ============ -->
+<section class="section">
+  <div class="wrap">
+    <div class="center" style="max-width:640px;margin:0 auto 44px" data-reveal>
+      <span class="eyebrow">Everything you need</span>
+      <h2 class="h2" style="margin-top:14px">One platform for your whole financial life</h2>
+    </div>
+    <div class="grid g4" id="tiles"></div>
+  </div>
+</section>
+
+<!-- ============ AI AGENT ============ -->
+<section class="section night">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center" class="split">
+      <div data-reveal>
+        <span class="eyebrow eyebrow-dark">AI financial agent</span>
+        <h2 class="h2" style="margin-top:14px">Just tell it what you need</h2>
+        <p class="lead lead-dark" style="margin-top:18px">
+          No menus. No forms. No friction. Tell the agent what to do and it prepares everything,
+          then asks for your approval before a single cent moves.
+        </p>
+        <ul class="list-check">
+          <li>The agent prepares, you decide — always</li>
+          <li>Real-time fraud detection on every instruction</li>
+          <li>Biometric or PIN confirmation before release</li>
+          <li>Every action written to an audit log you can read</li>
+        </ul>
+      </div>
+      <div data-reveal>
+        <div class="card" style="background:#fff;color:var(--ink);padding:24px">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="ico ico-sm" style="background:var(--tint)"><svg viewBox="0 0 24 24"><path d="M12 5.5A3 3 0 0 0 6.5 4 3 3 0 0 0 4 9a3 3 0 0 0 2 5 3 3 0 0 0 6 .5zm0 0A3 3 0 0 1 17.5 4 3 3 0 0 1 20 9a3 3 0 0 1-2 5 3 3 0 0 1-6 .5z"></path></svg></div>
+            <div style="flex:1">
+              <div class="small" style="font-weight:600;color:var(--forest)">You said</div>
+              <p style="margin-top:5px;font-size:15.5px">Send N$500 to Thabo and pay my electricity bill.</p>
+            </div>
+          </div>
+          <div style="height:1px;background:var(--line);margin:20px 0"></div>
+          <div class="small" style="font-weight:600;color:var(--forest);letter-spacing:.06em">I&rsquo;M READY TO EXECUTE</div>
+          <div style="margin-top:12px;display:grid;gap:10px">
+            <div style="display:flex;justify-content:space-between;gap:12px;padding:13px 15px;background:var(--tint);border-radius:12px">
+              <div><div style="font-weight:600;font-size:14.5px">N$500.00 to Thabo Nkosi</div><div class="small">Account UBF-7821 · verified</div></div>
+              <span class="badge badge-ok">Ready</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:12px;padding:13px 15px;background:var(--tint);border-radius:12px">
+              <div><div style="font-weight:600;font-size:14.5px">N$843.20 electricity bill</div><div class="small">City of Windhoek · acct 4410029183</div></div>
+              <span class="badge badge-ok">Ready</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:center">
+            <span class="small">Total</span>
+            <span style="font-weight:600;font-size:19px">N$1,343.20</span>
+          </div>
+          <div id="agentBox" style="margin-top:18px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CARDS ============ -->
+<section class="section tint">
+  <div class="wrap">
+    <div class="center" style="max-width:660px;margin:0 auto 44px" data-reveal>
+      <span class="eyebrow">Ubuntu cards</span>
+      <h2 class="h2" style="margin-top:14px">Choose the card that fits your life</h2>
+      <p class="lead" style="margin-top:16px">
+        Six cards, one account. Every Ubuntu card works anywhere in the world,
+        in any currency you hold, with zero hidden fees.
+      </p>
+    </div>
+    <div class="grid g3" id="cardGrid"></div>
+    <div class="center" style="margin-top:34px">
+      <a class="btn btn-dark" href="/signup.html">Order your card</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHILOSOPHY ============ -->
+<section class="section night">
+  <div class="wrap center">
+    <div style="max-width:820px;margin:0 auto" data-reveal>
+      <span class="eyebrow eyebrow-dark">The Ubuntu philosophy</span>
+      <p class="quote" style="margin-top:24px;color:#F6F4ED">
+        &ldquo;A person is a person through other people. We believe that true wealth is shared,
+        and that digital banking should serve the community, not just the individual.&rdquo;
+      </p>
+      <p style="margin-top:24px;font-weight:600;color:var(--mint)">I am because we are.</p>
+      <a class="btn btn-ghost-dark" href="/about.html" style="margin-top:28px">Read the founder&rsquo;s story</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="section">
+  <div class="wrap center">
+    <h2 class="h2" data-reveal>Your financial freedom starts today</h2>
+    <p class="lead" style="max-width:520px;margin:18px auto 0" data-reveal>
+      Open your Ubuntu Finance account in minutes. No branches. No queues. No barriers.
+    </p>
+    <div class="btn-row" style="justify-content:center;margin-top:28px" data-reveal>
+      <a class="btn btn-primary" href="/signup.html">Open an account</a>
+      <a class="btn btn-ghost" href="/contact.html">Talk to us</a>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<style>
+.tabbtn{padding:10px 18px;border-radius:999px;border:1px solid rgba(255,255,255,.2);
+  background:transparent;color:rgba(232,237,231,.72);font:600 13px/1 var(--sans);cursor:pointer;transition:.15s}
+.tabbtn.on{background:#fff;color:var(--ink);border-color:#fff}
+.askcard{background:#fff;border-radius:var(--r-lg);padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.34);text-align:left;color:var(--ink)}
+.bubble{padding:13px 16px;border-radius:14px;font-size:14.5px;line-height:1.55;max-width:88%}
+.bubble.them{background:var(--tint)}
+.bubble.mine{background:var(--night);color:#E8EDE7;margin-left:auto}
+.bubble .accent{margin-top:9px;padding:9px 12px;border-radius:9px;background:rgba(255,198,41,.16);
+  color:var(--gold-deep);font-weight:600;font-size:13.5px}
+@media(max-width:880px){.split{grid-template-columns:1fr!important;gap:36px!important}}
+</style>
+
+<script type="module">
+import { boot, $, $$, icon, svg, esc, getRates, tickRates, convert, CUR_NAME, BASE, money } from '/assets/js/ubuntu.js';
+boot('Home');
+
+/* ---------- live rate strip ---------- */
+const strip = $('#rateStrip'), clock = $('#rateClock');
+function paintRates(){
+  strip.innerHTML = getRates().map(r=>`
+    <div class="rate">
+      <div class="c">${r.code} · ${esc(CUR_NAME[r.code])}</div>
+      <div class="v">${r.value.toFixed(4)}</div>
+      <div class="d ${r.change>=0?'up':'down'}">${r.change>=0?'▲':'▼'} ${Math.abs(r.change).toFixed(2)}%</div>
+    </div>`).join('');
+  clock.textContent = 'Updated ' + new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
+paintRates();
+setInterval(()=>{ tickRates(); paintRates(); if(fxOut) fx(); }, 4000);
+
+/* ---------- tabs ---------- */
+$$('.tabbtn').forEach(b=>b.addEventListener('click',()=>{
+  $$('.tabbtn').forEach(x=>x.classList.toggle('on', x===b));
+  ['chat','calc','fx'].forEach(t=> $('#tab-'+t).hidden = (t !== b.dataset.tab));
+}));
+
+/* ---------- ask ---------- */
+const answers = [
+  [/debt|cycle|owe|budget/, 'List every debt with its rate and its monthly payment, then attack the most expensive one while paying the minimum on the rest.', 'N$10,000 at 20%: paying N$1,200 a month clears it in 10 months. Paying the minimum never clears it.'],
+  [/send|pay|transfer|mother/, 'I can prepare that. The recipient is verified against their unique Ubuntu QR identity, and nothing moves until you approve it.', 'Fee N$0.00 · arrives instantly · awaiting your approval'],
+  [/advance|limit|salary|payday|balance/, 'Once your salary is verified you can draw up to 40% of your net pay before payday at a flat 5% fee. No compounding, no rollover.', 'Repaid automatically on payday, in one instalment'],
+  [/convert|rate|currency|usd|zar|eur|gbp|aed|nad/, 'Converted at the live mid-market rate, with no spread added on top.', ''],
+  [/scam|fraud|suspicious|fake|protect/, 'Send me the message or the account number and I will check it against known scam patterns. One rule never fails: nobody legitimate needs you to pay in the next five minutes.', 'Real-time scam detection runs on every instruction.'],
+  [/save|saving|invest/, 'You can start with one dollar. Open a goal, round every payment up to the nearest N$10 and let it build quietly in the background.', 'N$15 a day is N$5,475 a year, before any growth.'],
+  [/loan|borrow|credit|gateway|score/, 'Gateway lends peer to peer. You see the lender, the rate and the full repayment total before you accept, and the agreement is written to a tamper-proof ledger.', '15% standard · up to 20% when urgent · capped, always']
+];
+const reply = q => {
+  const hit = answers.find(([re]) => re.test(q.toLowerCase()));
+  if (hit) return { text: hit[1], accent: hit[2] };
+  return { text: 'I can help with sending money, salary advances, Gateway lending, currency conversion, scam checks and financial coaching. Open an account and I work with your real numbers.', accent: '' };
+};
+let thread = [];
+function paintChat(){
+  $('#tab-chat').innerHTML = `
+    <div class="askcard">
+      ${thread.length ? `<div style="display:grid;gap:10px;margin-bottom:18px;max-height:280px;overflow-y:auto">
+        ${thread.map(m=>`<div class="bubble ${m.mine?'mine':'them'}">${esc(m.text)}
+          ${m.accent?`<div class="accent">${esc(m.accent)}</div>`:''}</div>`).join('')}
+      </div>`:''}
+      <div style="display:flex;align-items:center;gap:12px">
+        <span style="color:var(--muted);display:grid;place-items:center">${svg(
+          'M12 5.5A3 3 0 0 0 6.5 4 3 3 0 0 0 4 9a3 3 0 0 0 2 5 3 3 0 0 0 6 .5zm0 0A3 3 0 0 1 17.5 4 3 3 0 0 1 20 9a3 3 0 0 1-2 5 3 3 0 0 1-6 .5z','', )}</span>
+        <input id="askIn" placeholder="How can we help you today?" style="flex:1;min-width:0;border:none;background:transparent;font-size:16.5px;padding:14px 0;outline:none">
+        <button class="btn btn-primary btn-sm" id="askGo">Ask</button>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        ${['Send money','Salary advance','Learn budgeting','Is this a scam?','Gateway lending']
+          .map(c=>`<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join('')}
+      </div>
+    </div>`;
+  $('#askIn').addEventListener('keydown', e=>{ if(e.key==='Enter') send($('#askIn').value); });
+  $('#askGo').addEventListener('click', ()=> send($('#askIn').value));
+  $$('#tab-chat .chip').forEach(c=>c.addEventListener('click',()=>send(c.dataset.c)));
+}
+function send(q){
+  q = (q||'').trim(); if(!q) return;
+  thread.push({ mine:true, text:q });
+  const r = reply(q);
+  thread.push({ them:true, text:r.text, accent:r.accent });
+  paintChat(); $('#askIn').focus();
+}
+paintChat();
+
+/* ---------- calculator ---------- */
+$('#tab-calc').innerHTML = `
+  <div class="askcard">
+    <div class="grid g3" style="gap:14px">
+      <label class="field" style="margin:0"><span style="display:block;font:600 12.5px/1 var(--sans);color:var(--slate);margin-bottom:7px">Amount</span>
+        <input class="input" id="cAmt" value="10000" inputmode="decimal"></label>
+      <label class="field" style="margin:0"><span style="display:block;font:600 12.5px/1 var(--sans);color:var(--slate);margin-bottom:7px">Months</span>
+        <input class="input" id="cMon" value="12" inputmode="numeric"></label>
+      <label class="field" style="margin:0"><span style="display:block;font:600 12.5px/1 var(--sans);color:var(--slate);margin-bottom:7px">Rate %</span>
+        <input class="input" id="cRate" value="15" inputmode="decimal"></label>
+    </div>
+    <div class="grid g3" style="gap:12px;margin-top:16px">
+      <div style="background:var(--tint);border-radius:12px;padding:15px 17px">
+        <div class="small" style="letter-spacing:.1em;font-weight:600">MONTHLY</div>
+        <div id="oMon" style="margin-top:7px;font:600 20px/1 var(--sans);color:var(--green)"></div></div>
+      <div style="background:var(--tint);border-radius:12px;padding:15px 17px">
+        <div class="small" style="letter-spacing:.1em;font-weight:600">INTEREST</div>
+        <div id="oInt" style="margin-top:7px;font:600 20px/1 var(--sans);color:var(--gold-ink)"></div></div>
+      <div style="background:var(--tint);border-radius:12px;padding:15px 17px">
+        <div class="small" style="letter-spacing:.1em;font-weight:600">TOTAL REPAYABLE</div>
+        <div id="oTot" style="margin-top:7px;font:600 20px/1 var(--sans)"></div></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+      <button class="chip" data-p="4200,1,5">Salary advance, 5% flat</button>
+      <button class="chip" data-p="10000,12,15">Gateway standard, 15%</button>
+      <button class="chip" data-p="5000,6,20">Gateway urgent, 20%</button>
+    </div>
+  </div>`;
+function calc(){
+  const n = v => parseFloat(String(v).replace(/[^0-9.]/g,''))||0;
+  const a = n($('#cAmt').value), m = Math.max(1, Math.round(n($('#cMon').value))), r = n($('#cRate').value);
+  const total = a * (1 + (r/100)*(m/12));
+  const f = x => 'N$' + Math.round(x).toLocaleString('en-US');
+  $('#oMon').textContent = f(total/m); $('#oInt').textContent = f(total-a); $('#oTot').textContent = f(total);
+}
+['cAmt','cMon','cRate'].forEach(id=>$('#'+id).addEventListener('input', calc));
+$$('#tab-calc .chip').forEach(b=>b.addEventListener('click',()=>{
+  const [a,m,r]=b.dataset.p.split(','); $('#cAmt').value=a; $('#cMon').value=m; $('#cRate').value=r; calc();
+}));
+calc();
+
+/* ---------- converter ---------- */
+const codes = Object.keys(BASE);
+const opts = sel => codes.map(c=>`<option ${c===sel?'selected':''}>${c}</option>`).join('');
+$('#tab-fx').innerHTML = `
+  <div class="askcard">
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:end" id="fxRow">
+      <div>
+        <div style="font:600 12.5px/1 var(--sans);color:var(--slate);margin-bottom:7px">You convert</div>
+        <div style="display:flex">
+          <input class="input" id="fxAmt" value="100" inputmode="decimal" style="border-radius:12px 0 0 12px;border-right:none">
+          <select class="input" id="fxFrom" style="width:auto;border-radius:0 12px 12px 0;background:var(--tint)">${opts('USD')}</select>
+        </div>
+      </div>
+      <button id="fxSwap" style="width:42px;height:46px;border-radius:999px;background:var(--tint);border:none;cursor:pointer;display:grid;place-items:center;color:var(--forest)">${svg('M7 7h12.5l-3-3m3 3-3 3M17 17H4.5l3-3m-3 3 3 3')}</button>
+      <div>
+        <div style="font:600 12.5px/1 var(--sans);color:var(--slate);margin-bottom:7px">You receive</div>
+        <div style="display:flex">
+          <div class="input" id="fxOut" style="border-radius:12px 0 0 12px;border-right:none;background:rgba(255,198,41,.12);border-color:rgba(184,137,26,.35);color:var(--gold-deep);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+          <select class="input" id="fxTo" style="width:auto;border-radius:0 12px 12px 0;background:var(--tint)">${opts('NAD')}</select>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:14px" id="fxLine"></p>
+  </div>`;
+const fxOut = $('#fxOut');
+function fx(){
+  const a = parseFloat(String($('#fxAmt').value).replace(/[^0-9.]/g,''))||0;
+  const f = $('#fxFrom').value, t = $('#fxTo').value;
+  fxOut.textContent = convert(a,f,t).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:4});
+  $('#fxLine').textContent = `1 ${f} = ${convert(1,f,t).toFixed(4)} ${t} · live mid-market rate, no spread added`;
+}
+['fxAmt','fxFrom','fxTo'].forEach(id=>$('#'+id).addEventListener('input', fx));
+$('#fxSwap').addEventListener('click',()=>{ const a=$('#fxFrom').value; $('#fxFrom').value=$('#fxTo').value; $('#fxTo').value=a; fx(); });
+fx();
+
+/* ---------- tiles ---------- */
+const tiles = [
+  ['Send & Receive','send','/for-me.html'], ['Salary Advance','cash','/for-me.html'],
+  ['Financial Literacy','book','/literacy.html'], ['Gateway Lending','wallet','/gateway.html'],
+  ['Anti-Scam','shieldAlert','/security.html'], ['Multi-Currency Wallet','globe','/for-me.html'],
+  ['QR Payments','qr','/for-me.html'], ['e-SIM & Data','phone','/for-me.html'],
+  ['Insurance','umbrella','/for-me.html'], ['AI Insights','brain','/for-me.html'],
+  ['Medical Aid','plus','/for-me.html'], ['Tap & Pay','tap','/for-me.html']
+];
+$('#tiles').innerHTML = tiles.map(([l,i,h])=>`
+  <a class="card card-hover" href="${h}" data-reveal style="display:block;padding:22px">
+    ${icon(i)}
+    <div class="h4" style="margin-top:16px">${esc(l)}</div>
+  </a>`).join('');
+
+/* ---------- agent approve/decline ---------- */
+const agentBox = $('#agentBox');
+function paintAgent(state){
+  if(state==='pending'){
+    agentBox.innerHTML = `<div style="display:flex;gap:10px">
+      <button class="btn btn-ghost btn-sm" style="flex:1" id="agDecline">Decline</button>
+      <button class="btn btn-primary btn-sm" style="flex:1" id="agApprove">Approve &amp; send</button></div>
+      <p class="small" style="margin-top:11px;text-align:center">Biometric confirmation required to proceed</p>`;
+    $('#agApprove').onclick=()=>paintAgent('approved');
+    $('#agDecline').onclick=()=>paintAgent('declined');
+  } else {
+    const ok = state==='approved';
+    agentBox.innerHTML = `<div class="alert ${ok?'alert-ok':'alert-bad'}" style="margin:0">
+      ${ok ? 'N$500 sent to Thabo. Electricity bill of N$843.20 paid. Both written to your transaction record.'
+           : 'Nothing moved. No money left your account and the instruction was discarded.'}</div>
+      <button class="btn btn-ghost btn-sm btn-block" style="margin-top:10px" id="agReset">Run it again</button>`;
+    $('#agReset').onclick=()=>paintAgent('pending');
+  }
+}
+paintAgent('pending');
+
+/* ---------- cards ---------- */
+const cards = [
+  ['Ubuntu Everyday','Free forever','Free to open, free to keep. Instant QR payments, salary advances and free literacy.','#0C2118','#A6D573','9021'],
+  ['Ubuntu Gold','N$49 / month','Higher advance limits, priority Gateway rates and travel cover in every currency you hold.','#14512C','#FFC629','4410'],
+  ['Ubuntu Black','Invitation only','Unlimited transfers, concierge support and the highest daily limits on the platform.','#0A1F14','#E8EDE7','7512'],
+  ['Ubuntu Business','Zero merchant fees','Staff cards with per-card limits, bulk payroll and QR merchant settlement in seconds.','#2E7D46','#F6F4ED','3388'],
+  ['Ubuntu Youth','Free under 21','Parent-linked spending limits, savings goals and literacy lessons built for first accounts.','#4E9E58','#0A1F14','6677'],
+  ['Ubuntu Virtual','Free, unlimited','Disposable numbers for online subscriptions. Freeze, delete or regenerate instantly.','#5A6B60','#F6F4ED','0104']
+];
+$('#cardGrid').innerHTML = cards.map(([n,p,b,bg,ink,l4])=>`
+  <div class="card" data-reveal style="padding:0;overflow:hidden;background:#fff">
+    <div style="background:${bg};color:${ink};padding:24px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <img src="/assets/img/ubuntu-mark.svg" alt="" style="height:26px;filter:brightness(0) invert(1);opacity:.9">
+        <span style="font:600 11px/1 var(--sans);letter-spacing:.12em;text-transform:uppercase;opacity:.75">${esc(p)}</span>
+      </div>
+      <div>
+        <div class="mono" style="font-size:15px;letter-spacing:.1em;opacity:.9">5412 &nbsp;${esc(l4)}&nbsp; ••••&nbsp; ${Math.floor(1000+Math.random()*8999)}</div>
+        <div style="margin-top:10px;font:600 16px/1 var(--sans)">${esc(n)}</div>
+      </div>
+    </div>
+    <div style="padding:20px 22px 24px"><p style="font-size:14.5px;color:var(--slate);line-height:1.55">${esc(b)}</p></div>
+  </div>`).join('');
+</script>
+<style>
+.chip{padding:9px 15px;border-radius:999px;border:1px solid var(--line-2);background:#fff;
+  font:600 12.5px/1 var(--sans);color:var(--forest);cursor:pointer;transition:.14s}
+.chip:hover{background:var(--tint);border-color:var(--lime)}
+</style>
+</body>
+</html>

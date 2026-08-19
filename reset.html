@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Account recovery — Ubuntu Finance</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+import { sb, $, esc, niceError } from '/assets/js/ubuntu.js';
+import { authShell } from '/assets/js/auth-shell.js';
+
+const hash = new URLSearchParams(location.hash.slice(1));
+const isRecovery = hash.get('type') === 'recovery' || location.search.includes('type=recovery');
+
+document.getElementById('root').innerHTML = isRecovery
+  ? authShell('Choose a new password.', 'Pick something you have never used on another site.',
+      `<form id="f2">
+        <div class="field"><label for="pw">New password</label>
+          <input class="input" id="pw" type="password" required autocomplete="new-password" placeholder="At least 8 characters"></div>
+        <div id="out"></div>
+        <button class="btn btn-primary btn-block" type="submit" id="go">Save new password</button>
+      </form>`)
+  : authShell('We will send you a link.', 'We never ask for your password. If anyone does, report it in the app.',
+      `<form id="f">
+        <div class="field"><label for="email">Email on your account</label>
+          <input class="input" id="email" type="email" required placeholder="you@example.com"></div>
+        <div id="out"></div>
+        <button class="btn btn-primary btn-block" type="submit" id="go">Send reset link</button>
+      </form>
+      <p class="small" style="margin-top:18px;text-align:center"><a href="/login.html">Back to log in</a></p>`);
+
+$('#f')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const go = $('#go'), out = $('#out');
+  go.disabled = true; go.innerHTML = '<span class="spin"></span> Sending';
+  const { error } = await sb.auth.resetPasswordForEmail($('#email').value.trim(), {
+    redirectTo: location.origin + '/reset.html'
+  });
+  go.disabled = false; go.textContent = 'Send reset link';
+  if (error) { out.innerHTML = '<div class="alert alert-bad">' + esc(niceError(error)) + '</div>'; return; }
+  $('#f').innerHTML = '<div class="alert alert-ok">If that email is on an Ubuntu account, a reset link is on its way. The link expires in one hour.</div>';
+});
+
+$('#f2')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const go = $('#go'), out = $('#out');
+  if ($('#pw').value.length < 8) { out.innerHTML = '<div class="alert alert-bad">At least 8 characters, please.</div>'; return; }
+  go.disabled = true; go.innerHTML = '<span class="spin"></span> Saving';
+  const { error } = await sb.auth.updateUser({ password: $('#pw').value });
+  go.disabled = false; go.textContent = 'Save new password';
+  if (error) { out.innerHTML = '<div class="alert alert-bad">' + esc(niceError(error)) + '</div>'; return; }
+  $('#f2').innerHTML = '<div class="alert alert-ok">Password updated.</div><a class="btn btn-primary btn-block" href="/app.html">Go to my dashboard</a>';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open an account — Ubuntu Finance</title>
+<meta name="description" content="Open your Ubuntu Finance account in minutes. No monthly fee, no minimum balance, no branch visit.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+import { sb, $, esc, niceError, COUNTRIES } from '/assets/js/ubuntu.js';
+import { authShell } from '/assets/js/auth-shell.js';
+
+document.getElementById('root').innerHTML = authShell(
+  'Three fields and you are in.',
+  'No monthly fee, no minimum balance, no branch visit. Financial literacy is free forever.',
+  `<form id="f">
+    <div class="field"><label for="name">Full name</label>
+      <input class="input" id="name" required autocomplete="name" placeholder="As it appears on your ID">
+      <div class="hint">This has to match your ID document when you verify.</div></div>
+    <div class="field"><label for="email">Email</label>
+      <input class="input" id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field"><label for="country">Country</label>
+      <select class="input" id="country">
+        ${COUNTRIES.map(([n,c])=>`<option value="${n}|${c}">${n} (${c})</option>`).join('')}
+      </select></div>
+    <div class="field"><label for="pw">Create a password</label>
+      <input class="input" id="pw" type="password" required autocomplete="new-password" placeholder="At least 8 characters">
+      <div class="hint">Use something you have never used on another site.</div></div>
+    <div id="out"></div>
+    <button class="btn btn-primary btn-block" type="submit" id="go">Open my account</button>
+  </form>
+  <p class="small" style="margin-top:18px;text-align:center">
+    Already with us? <a href="/login.html">Log in</a>
+  </p>
+  <p class="small" style="margin-top:14px;line-height:1.5">
+    By opening an account you agree to our <a href="/legal/terms.html">terms</a> and
+    <a href="/legal/privacy.html">privacy policy</a>. This is a sandbox environment: your account is real,
+    balances are simulated test funds.
+  </p>`
+);
+
+$('#f').addEventListener('submit', async e => {
+  e.preventDefault();
+  const go = $('#go'), out = $('#out');
+  const pw = $('#pw').value;
+  if (pw.length < 8) { out.innerHTML = '<div class="alert alert-bad">Your password needs to be at least 8 characters.</div>'; return; }
+  const [country, cur] = $('#country').value.split('|');
+  go.disabled = true; go.innerHTML = '<span class="spin"></span> Opening your account';
+  const { data, error } = await sb.auth.signUp({
+    email: $('#email').value.trim(),
+    password: pw,
+    options: {
+      emailRedirectTo: location.origin + '/app.html',
+      data: { full_name: $('#name').value.trim(), country, base_currency: cur }
+    }
+  });
+  go.disabled = false; go.textContent = 'Open my account';
+  if (error) { out.innerHTML = '<div class="alert alert-bad">' + esc(niceError(error)) + '</div>'; return; }
+  if (data.session) { location.href = '/app.html'; return; }
+  $('#f').innerHTML = `<div class="alert alert-ok">
+    Account created. We have sent a confirmation link to <strong>${esc($('#email').value.trim())}</strong>.
+    Click it and your Ubuntu account number will be waiting for you.</div>
+    <a class="btn btn-ghost btn-block" href="/login.html">Go to log in</a>`;
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard — Ubuntu Finance</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0C2118">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<style>
+body{background:var(--paper)}
+.shell{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+.side{background:var(--night);color:#E8EDE7;padding:20px 14px;display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;overflow-y:auto;scrollbar-width:thin}
+.side::-webkit-scrollbar{width:6px}
+.side::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px}
+.side .brand{padding:6px 10px 20px}
+.side .brand span{color:#A6D573;font-size:17px}
+.side .brand b{color:#F6F4ED}
+.snav{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;
+  color:rgba(232,237,231,.68);font:500 14px/1 var(--sans);cursor:pointer;
+  border:none;background:none;width:100%;text-align:left;transition:.14s}
+.snav:hover{background:rgba(255,255,255,.07);color:#F6F4ED}
+.snav.on{background:var(--lime);color:var(--ink);font-weight:600}
+.snav svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto}
+.snav .cnt{margin-left:auto;background:var(--gold);color:var(--ink);
+  font:600 10.5px/1 var(--sans);padding:4px 7px;border-radius:999px}
+.main{min-width:0;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;background:rgba(249,251,249,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line);
+  padding:14px 28px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.content{padding:28px;flex:1;max-width:1180px;width:100%}
+.mobtop{display:none}
+.tile{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px}
+.tile h3{font-size:16px;font-weight:600}
+.kpi{font:600 clamp(26px,3vw,36px)/1 var(--sans);letter-spacing:-.028em}
+.row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.av{width:40px;height:40px;border-radius:999px;background:var(--tint);display:grid;place-items:center;
+  font:600 13.5px/1 var(--sans);color:var(--forest);flex:0 0 auto}
+.seg{display:inline-flex;background:var(--tint);border-radius:11px;padding:4px;gap:2px;flex-wrap:wrap}
+.seg button{border:none;background:none;padding:8px 15px;border-radius:8px;cursor:pointer;
+  font:600 13px/1 var(--sans);color:var(--slate)}
+.seg button.on{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(10,31,20,.1)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,92vw);background:#fff;z-index:150;
+  box-shadow:-20px 0 60px rgba(10,31,20,.22);padding:24px;overflow-y:auto;transform:translateX(105%);
+  transition:transform .22s ease}
+.drawer.open{transform:none}
+.veil{position:fixed;inset:0;background:rgba(10,31,20,.4);z-index:140;display:none}
+.veil.open{display:block}
+.crd{border-radius:16px;padding:22px;min-height:180px;display:flex;flex-direction:column;justify-content:space-between;color:#F6F4ED}
+@media(max-width:960px){
+  .shell{grid-template-columns:1fr}
+  .side{position:fixed;left:0;top:0;bottom:0;width:250px;z-index:120;transform:translateX(-105%);transition:transform .2s}
+  .side.open{transform:none}
+  .mobtop{display:grid}
+  .content{padding:20px 16px}
+  .topbar{padding:12px 16px}
+}
+</style>
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div class="veil" id="veil"></div>
+<div class="shell">
+  <aside class="side" id="side"></aside>
+  <div class="main">
+    <div class="topbar" id="topbar"></div>
+    <div class="content" id="view">
+      <div class="tile"><div class="skeleton" style="width:180px"></div>
+        <div class="skeleton" style="width:100%;height:60px;margin-top:16px"></div></div>
+    </div>
+  </div>
+</div>
+<div class="drawer" id="drawer"></div>
+<div class="modal-bg" id="modal"><div class="modal" id="modalBody"></div></div>
+<script type="module" src="/assets/js/app.js"></script>
+</body>
+</html>

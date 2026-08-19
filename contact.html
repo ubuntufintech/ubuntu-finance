@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact Us — Ubuntu Finance</title>
+<meta name="description" content="Questions about an account, a partnership or the Gateway marketplace. Tell us what you need and a person, not a script, will come back to you.">
+<meta name="theme-color" content="#0C2118">
+<link rel="canonical" href="https://ubuntufin.com/contact.html">
+<meta property="og:title" content="Contact Us — Ubuntu Finance">
+<meta property="og:description" content="Questions about an account, a partnership or the Gateway marketplace. Tell us what you need and a person, not a script, will come back to you.">
+<meta property="og:url" content="https://ubuntufin.com/contact.html">
+<meta property="og:image" content="https://ubuntufin.com/assets/img/ubuntu-mark.svg">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div id="site-header"></div>
+
+
+<section class="hero hero-sm">
+  <div class="wrap">
+    <div style="max-width:760px">
+      <span class="eyebrow eyebrow-dark">Contact</span>
+      <h1 class="h1" style="margin-top:16px">Let&rsquo;s Talk</h1>
+      <p class="lead lead-dark" style="margin-top:20px">Questions about an account, a partnership or the Gateway marketplace. Tell us what you need and a person, not a script, will come back to you.</p>
+      
+    </div>
+    
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:start" class="split">
+      <div class="card" data-reveal>
+        <h2 class="h3">Send us a message</h2>
+        <form id="cForm" style="margin-top:22px">
+          <div class="field"><label for="cName">Your name</label><input class="input" id="cName" required></div>
+          <div class="field"><label for="cEmail">Email address</label><input class="input" id="cEmail" type="email" required></div>
+          <div class="field"><label for="cTopic">What is this about</label>
+            <select class="input" id="cTopic">
+              <option>My personal account</option>
+              <option>Business and merchant services</option>
+              <option>Gateway lending marketplace</option>
+              <option>Institutional partnership</option>
+              <option>Report a scam or fraud</option>
+              <option>Media and press</option>
+              <option>Something else</option>
+            </select></div>
+          <div class="field"><label for="cMsg">Message</label><textarea class="input" id="cMsg" required placeholder="Tell us what you need."></textarea></div>
+          <div id="cOut"></div>
+          <button class="btn btn-primary btn-block" type="submit" id="cBtn">Send message</button>
+          <p class="small" style="margin-top:12px">We never ask for your password, PIN or card number by email.</p>
+        </form>
+      </div>
+
+      <div class="stack" data-reveal>
+        <div class="card card-tint" style="display:flex;gap:15px;align-items:center">
+          <span data-icon="mail"></span>
+          <div><div class="small" style="letter-spacing:.1em;font-weight:600">EMAIL</div>
+          <div style="margin-top:5px;font-weight:600;font-size:15px">hello@ubuntufin.com</div></div></div><div class="card card-tint" style="display:flex;gap:15px;align-items:center">
+          <span data-icon="chat"></span>
+          <div><div class="small" style="letter-spacing:.1em;font-weight:600">SUPPORT</div>
+          <div style="margin-top:5px;font-weight:600;font-size:15px">In-app chat, 24 hours a day</div></div></div><div class="card card-tint" style="display:flex;gap:15px;align-items:center">
+          <span data-icon="pin"></span>
+          <div><div class="small" style="letter-spacing:.1em;font-weight:600">OFFICE</div>
+          <div style="margin-top:5px;font-weight:600;font-size:15px">Windhoek, Namibia</div></div></div>
+
+        <div class="card" style="border-left:3px solid var(--red)">
+          <h3 class="h4">Think you have been scammed?</h3>
+          <p style="margin-top:10px;font-size:14.5px;color:var(--slate);line-height:1.6">
+            Freeze your account from the dashboard immediately, then report it here or in the app.
+            Our trust and safety team reviews every report.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/security.html" style="margin-top:14px">How we protect you</a>
+        </div>
+
+        <div class="card" id="partner">
+          <h3 class="h4">Institutional partners</h3>
+          <p style="margin-top:10px;font-size:14.5px;color:var(--slate);line-height:1.6">
+            Registered banks, microfinance organisations and credit unions can apply to list loan
+            products on Ubuntu Finance.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/business.html#partner" style="margin-top:14px">Apply to partner</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>@media(max-width:880px){.split{grid-template-columns:1fr!important;gap:32px!important}}</style>
+<div id="site-footer"></div>
+<script type="module">
+import { boot, $, $$, icon, svg, esc, sb, niceError } from '/assets/js/ubuntu.js';
+boot("Contact");
+
+$('#cForm')?.addEventListener('submit', async e => {
+  e.preventDefault();
+  const btn = $('#cBtn'), out = $('#cOut');
+  btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Sending';
+  const reference = 'MSG-' + Math.floor(100000 + Math.random() * 899999);
+  const { error } = await sb.from('contact_messages').insert({
+    name: $('#cName').value.trim(), email: $('#cEmail').value.trim(),
+    topic: $('#cTopic').value, message: $('#cMsg').value.trim(), reference
+  });
+  btn.disabled = false; btn.textContent = 'Send message';
+  if (error) { out.innerHTML = '<div class="alert alert-bad">' + esc(niceError(error)) + '</div>'; return; }
+  $('#cForm').innerHTML = '<div class="alert alert-ok">Message received. Your reference is <strong>' + reference +
+    '</strong>. A person will come back to you by email, usually within one working day.</div>';
+});
+</script>
+</body>
+</html>

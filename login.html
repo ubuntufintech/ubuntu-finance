@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Log in — Ubuntu Finance</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/img/ubuntu-mark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..700;1,300..500&family=Newsreader:ital,opsz,wght@1,6..72,400..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/ubuntu.css">
+<script src="/assets/js/config.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="module">
+import { sb, $, esc, niceError } from '/assets/js/ubuntu.js';
+import { authShell } from '/assets/js/auth-shell.js';
+
+document.getElementById('root').innerHTML = authShell(
+  'Log in to your account.',
+  'We never ask for your password by email or phone. If anyone does, report it.',
+  `<form id="f">
+    <div class="field"><label for="email">Email</label>
+      <input class="input" id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div>
+    <div class="field"><label for="pw">Password</label>
+      <input class="input" id="pw" type="password" required autocomplete="current-password"></div>
+    <div id="out"></div>
+    <button class="btn btn-primary btn-block" type="submit" id="go">Log in</button>
+  </form>
+  <p class="small" style="margin-top:18px;text-align:center">
+    <a href="/reset.html">Forgotten your password?</a>
+  </p>
+  <p class="small" style="margin-top:10px;text-align:center">
+    No account yet? <a href="/signup.html">Open one in minutes</a>
+  </p>`
+);
+
+const next = new URLSearchParams(location.search).get('next') || '/app.html';
+sb.auth.getUser().then(({ data }) => { if (data?.user) location.href = next; });
+
+$('#f').addEventListener('submit', async e => {
+  e.preventDefault();
+  const go = $('#go'), out = $('#out');
+  go.disabled = true; go.innerHTML = '<span class="spin"></span> Checking';
+  const { error } = await sb.auth.signInWithPassword({
+    email: $('#email').value.trim(), password: $('#pw').value
+  });
+  go.disabled = false; go.textContent = 'Log in';
+  if (error) { out.innerHTML = '<div class="alert alert-bad">' + esc(niceError(error)) + '</div>'; return; }
+  location.href = next;
+});
+</script>
+</body>
+</html>
