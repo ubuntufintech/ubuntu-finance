@@ -81,7 +81,7 @@ const KB = [
   { k: 'roadmap phases phase timeline rollout stages sequence order', a: 'Five phases. Phase 1 is the core MVP in the first six months. Phase 2 adds smart money tools by month twelve. Phase 3 brings lending and insurance across months twelve to twenty-four. Phase 4 is cross-border and global expansion. Phase 5 is the full digital bank.' },
   { k: 'launch launching live available download app release date ready when public status', a: 'Ubuntu Finance is in development, working toward its Phase 1 MVP. This website is a product preview — what you see in the dashboard is demonstration data, not live banking.' },
   { k: 'targets goals users metrics uptime 10000 50000', a: 'Phase 1 targets 10,000 active users, 99.5% transaction uptime and zero major security incidents. Phase 2 targets 50,000 active users, five or more employer partnerships and salary advance take-up above 20% of eligible users.' },
-  { k: 'funding investment raise seed series investors capital', a: 'The seed round for the Phase 1 MVP is USD 500,000 to USD 1,000,000, with a Series A scale round of USD 3,000,000 to USD 8,000,000.' },
+  { k: 'funding investment raise seed series investors fundraising', a: 'The seed round for the Phase 1 MVP is USD 500,000 to USD 1,000,000, with a Series A scale round of USD 3,000,000 to USD 8,000,000.' },
   { k: 'social impact community women inclusion sdg empowerment', a: 'The platform is built around financial inclusion, tracks its impact, aligns to the UN Sustainable Development Goals and puts particular focus on women and economic empowerment.' },
 
   // ---------- GUIDANCE ----------
@@ -112,19 +112,25 @@ const ENTRY_TOKENS = KB.map(e => {
 const IDF = {};
 Object.keys(DF).forEach(w => { IDF[w] = Math.log(1 + KB.length / DF[w]); });
 
+// words that may contribute to a score but must never be the only reason we answer
+const GENERIC = new Set(['plan','access','order','history','personal','month','hold',
+ 'world','people','life','place','number','value','summary','statement']);
+
 function lookup(q) {
   const qt = toks(q);
   if (!qt.length) return null;
-  let best = -1, bi = -1, second = -1;
+  let best = -1, bi = -1, second = -1, bestHits = [];
   for (let i = 0; i < KB.length; i++) {
     const set = ENTRY_TOKENS[i];
-    let s = 0;
-    for (const w of qt) if (set.has(w)) s += (IDF[w] || 1);
+    let s = 0, hits = [];
+    for (const w of qt) if (set.has(w)) { s += (IDF[w] || 1); hits.push(w); }
     s /= Math.sqrt(qt.length);
-    if (s > best) { second = best; best = s; bi = i; }
+    if (s > best) { second = best; best = s; bi = i; bestHits = hits; }
     else if (s > second) second = s;
   }
   if (best < 0.62) return null;
+  // an off-topic question that merely shares one vague word is not a match
+  if (!bestHits.length || bestHits.every(function (w) { return GENERIC.has(w); })) return null;
   return { text: KB[bi].a, accent: KB[bi].x || null, score: best, margin: best - second, idx: bi };
 }
 
