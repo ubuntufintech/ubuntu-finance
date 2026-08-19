@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Ubuntu Finance">
+<defs><clipPath id="lh"><rect x="0" y="0" width="128" height="256"/></clipPath></defs>
+<g>
+<path id="u" d="M8 60 L8 128 A120 120 0 0 0 248 128 L248 60 L200 60 L200 128 A72 72 0 0 1 56 128 L56 60 Z" fill="#2E7D46"/>
+<use href="#u" fill="#8FC96B" clip-path="url(#lh)"/>
+<circle cx="32" cy="30" r="28" fill="#F5C518"/>
+<circle cx="224" cy="30" r="28" fill="#F5C518"/>
+</g>
+</svg>
