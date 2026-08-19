@@ -3133,12 +3133,31 @@ class Component extends DCLogic {
    this.setState({ attachment: '' });
   }
   if (!q) return;
-  const a = this.answer(q);
+  const mode = key === 'coach' ? 'coach' : 'general';
+  const history = (this.state[key] || [])
+   .filter(m => m && m.text && !m.pending)
+   .map(m => ({ role: m.mine ? 'user' : 'assistant', content: String(m.text) }))
+   .slice(-10);
+  history.push({ role: 'user', content: q });
+  const tag = 'p' + Date.now() + '-' + Math.floor(Math.random() * 1e6);
   this.setState(s => {
    const next = { [inputKey]: '' };
-   next[key] = [...s[key], { mine: 1, text: q }, { them: 1, text: a.text, accent: a.accent }];
+   next[key] = [...s[key], { mine: 1, text: q }, { them: 1, text: 'Thinking...', tag: tag, pending: 1 }];
    return next;
   });
+  const settle = (text, accent) => this.setState(s => ({
+   [key]: s[key].map(m => (m.tag === tag ? { them: 1, text: text, accent: accent } : m))
+  }));
+  const fallback = () => { const a = this.answer(q); settle(a.text, a.accent); };
+  const timer = setTimeout(fallback, 20000);
+  fetch('https://inwsyhopzbuvqjipvuhg.supabase.co/functions/v1/chat', {
+   method: 'POST',
+   headers: { 'Content-Type': 'application/json' },
+   body: JSON.stringify({ mode: mode, messages: history })
+  })
+   .then(r => r.json())
+   .then(d => { clearTimeout(timer); if (d && d.reply) { settle(d.reply, null); } else { fallback(); } })
+   .catch(() => { clearTimeout(timer); fallback(); });
  }
 
  open(kind, done) { return () => this.setState({ modal: kind, mf: {}, modalError: '', modalDone: done || null }); }
