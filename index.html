@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="/support.js"></script>
+<script src="/kb.js"></script>
 </head>
 <body>
 <x-dc>
@@ -21,7 +22,7 @@ html,body{max-width:100%;overflow-x:hidden}
 body{margin:0;background:#fff;font-family:Figtree,system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
 a{color:#2E7D46;text-decoration:none}a:hover{color:#0A1F14}
 input,select,button,textarea{font-family:inherit}
-input:focus,select:focus,textarea:focus{outline:2px solid #5FBB63;outline-offset:1px}
+input:focus,select:focus,textarea:focus{outline:none}input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid currentColor;outline-offset:1px}
 @keyframes ubslide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 </style></helmet>
 
@@ -3115,15 +3116,13 @@ class Component extends DCLogic {
  pairLine() { const p = this.rate(this.state.to) / this.rate(this.state.from); return '1 ' + this.state.from + ' = ' + p.toFixed(4) + ' ' + this.state.to; }
 
  answer(q) {
-  const t = q.toLowerCase();
-  if (/debt|cycle|owe|budget/.test(t)) return { text: 'Here is the honest picture. List every debt with its rate and its monthly payment, then attack the most expensive one while paying the minimum on the rest.', accent: 'N$10,000 at 20%: paying N$1,200 a month clears it in 10 months. Paying the minimum never clears it.' };
-  if (/send|pay|transfer|mother/.test(t)) return { text: 'Prepared. Recipient verified against their unique Ubuntu QR identity. Nothing moves until you approve it.', accent: 'Amount N$500 · fee N$0.00 · arrives instantly · awaiting your approval' };
-  if (/advance|limit|salary|payday|balance/.test(t)) return { text: 'Your salary is verified, so you can draw up to 40% of your net pay before payday at a flat 5% fee. No compounding, no rollover.', accent: 'Available now N$4,200 · balance N$1,860.40 · repaid automatically on payday' };
-  if (/convert|rate|currency|usd|zar|eur|gbp|aed|nad/.test(t)) return { text: 'Converted at the live mid-market rate, with no spread added on top.', accent: this.pairLine() };
-  if (/scam|fraud|suspicious|fake|protection/.test(t)) return { text: 'Send me the message or the account number and I will check it against known scam patterns. One rule that never fails: nobody legitimate needs you to pay in the next five minutes.', accent: 'Real-time scam detection runs on every instruction you give me.' };
-  if (/save|saving|invest/.test(t)) return { text: 'You can start with $1. I would open a goal, round every payment up to the nearest N$10 and let it build quietly in the background.', accent: 'N$15 a day is N$5,475 a year, before any growth.' };
-  if (/loan|borrow|credit|gateway|score/.test(t)) return { text: 'Gateway lends peer to peer. You see the lender, the rate and the full repayment total before you accept anything, and the agreement is written to a tamper-proof ledger.', accent: '15% standard · up to 20% when the need is urgent · capped, always' };
-  return { text: 'I can move money, explain what something costs, check a limit, convert currency or tell you whether something is a scam. Ask in your own words and I will do the working.' };
+  const t = String(q || '').toLowerCase();
+  // live figures the page already computes stay dynamic
+  if (/convert|exchange rate|currency rate|usd|zar|eur|gbp|aed|nad/.test(t) && /rate|convert|worth|equal/.test(t))
+   return { text: 'Converted at the live mid-market rate, with no spread added on top.', accent: this.pairLine() };
+  const kb = (typeof window !== 'undefined' && window.UBUNTU_KB) || null;
+  if (kb) { const hit = kb.lookup(q); if (hit) return hit; return kb.miss(); }
+  return { text: 'Ask me about fees, salary advances, Gateway lending, cards, security, or how the AI agent works.' };
  }
 
  push(key, inputKey, raw) {
@@ -3133,31 +3132,12 @@ class Component extends DCLogic {
    this.setState({ attachment: '' });
   }
   if (!q) return;
-  const mode = key === 'coach' ? 'coach' : 'general';
-  const history = (this.state[key] || [])
-   .filter(m => m && m.text && !m.pending)
-   .map(m => ({ role: m.mine ? 'user' : 'assistant', content: String(m.text) }))
-   .slice(-10);
-  history.push({ role: 'user', content: q });
-  const tag = 'p' + Date.now() + '-' + Math.floor(Math.random() * 1e6);
+  const a = this.answer(q);
   this.setState(s => {
    const next = { [inputKey]: '' };
-   next[key] = [...s[key], { mine: 1, text: q }, { them: 1, text: 'Thinking...', tag: tag, pending: 1 }];
+   next[key] = [...s[key], { mine: 1, text: q }, { them: 1, text: a.text, accent: a.accent }];
    return next;
   });
-  const settle = (text, accent) => this.setState(s => ({
-   [key]: s[key].map(m => (m.tag === tag ? { them: 1, text: text, accent: accent } : m))
-  }));
-  const fallback = () => { const a = this.answer(q); settle(a.text, a.accent); };
-  const timer = setTimeout(fallback, 20000);
-  fetch('https://inwsyhopzbuvqjipvuhg.supabase.co/functions/v1/chat', {
-   method: 'POST',
-   headers: { 'Content-Type': 'application/json' },
-   body: JSON.stringify({ mode: mode, messages: history })
-  })
-   .then(r => r.json())
-   .then(d => { clearTimeout(timer); if (d && d.reply) { settle(d.reply, null); } else { fallback(); } })
-   .catch(() => { clearTimeout(timer); fallback(); });
  }
 
  open(kind, done) { return () => this.setState({ modal: kind, mf: {}, modalError: '', modalDone: done || null }); }
